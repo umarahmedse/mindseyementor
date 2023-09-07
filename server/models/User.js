@@ -118,5 +118,8 @@ UserSchema.virtual("enrolledCourses", {
   localField: "_id",
   foreignField: "userId",
 });
+UserSchema.set("toJSON", { virtuals: true });
+UserSchema.set("toObject", { virtuals: true });
+
 const User = mongoose.model("User", UserSchema);
 export default User;
