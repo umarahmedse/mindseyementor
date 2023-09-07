@@ -5,10 +5,12 @@ const BookingSchema = new mongoose.Schema(
     userId: {
       type: Schema.Types.ObjectId,
       ref: "User",
+      required: true,
     },
     courseId: {
       type: Schema.Types.ObjectId,
       ref: "Courses",
+      required: true,
     },
     amount: {
       type: Number,
