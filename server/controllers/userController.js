@@ -21,7 +21,7 @@ export const getUser = catchAsync(async (req, res, next) => {
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return next(new AppError("Invalid Or Forbidden User ", 404));
   }
-  const user = await User.findById(id);
+  const user = await User.findById(id).populate("enrolledCourses");
   if (!user) {
     return next(new AppError("User Not Found", 404));
   }
