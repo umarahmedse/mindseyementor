@@ -112,5 +112,11 @@ UserSchema.methods.createPasswordResetToken = function () {
     .digest("hex");
   return resetToken; //send via email
 };
+// Virtual Poplation Of Purchased Courses
+UserSchema.virtual("enrolledCourses", {
+  ref: "Booking",
+  localField: "_id",
+  foreignField: "userId",
+});
 const User = mongoose.model("User", UserSchema);
 export default User;
