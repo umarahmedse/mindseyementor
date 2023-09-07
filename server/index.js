@@ -13,6 +13,7 @@ import rateLimit from "express-rate-limit";
 import userRoutes from "./routes/userRoutes.js";
 import courseRoutes from "./routes/courseRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
+import bookingRoutes from "./routes/bookingRoutes.js";
 import globalErrorHandler from "./utils/errorHandler.js";
 const limiter = rateLimit({
   max: 100, // Maximum requests per windowMs
@@ -36,6 +37,7 @@ app.use(cors());
 app.use(hpp());
 /* ROUTES */
 app.use("/auth", authRoutes);
+app.use("/booking", bookingRoutes);
 app.use("/users", userRoutes);
 app.use("/course", courseRoutes);
 app.all("*", (req, res, next) => {
