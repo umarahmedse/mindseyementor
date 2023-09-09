@@ -114,7 +114,7 @@ UserSchema.methods.createPasswordResetToken = function () {
 };
 // Virtual Poplation Of Purchased Courses
 UserSchema.virtual("enrolledCourses", {
-  ref: "Booking",
+  ref: "Enrollment",
   localField: "_id",
   foreignField: "userId",
 });
