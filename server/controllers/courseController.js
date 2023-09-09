@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 import catchAsync from "../utils/catchAsync.js";
 import AppError from "../utils/appError.js";
 import Course from "../models/Course.js";
+import Enrollment from "../models/Enrollment.js";
 const filteredObj = (body, ...allowedFields) => {
   const resultObj = {};
   Object.keys(body).forEach((el) => {
@@ -81,5 +82,21 @@ export const updateCourse = catchAsync(async (req, res, next) => {
   if (!course) {
     return next(new AppError("Course Not Found", 404));
   }
+  res.status(200).json(course);
+});
+
+export const getCompleteCourse = catchAsync(async (req, res, next) => {
+  const courseId = req.params.id;
+  const userId = req.user.id;
+  const enrollment = Enrollment.findOne({ courseId, userId });
+  if (!enrollment)
+    return next(
+      new AppError(
+        "Can't access resource , please purchase first to access",
+        401
+      )
+    );
+
+  const course = Course.findById(courseId).populate("contents");
   res.status(200).json(course);
 });
