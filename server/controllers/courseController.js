@@ -86,9 +86,9 @@ export const updateCourse = catchAsync(async (req, res, next) => {
 });
 
 export const getCompleteCourse = catchAsync(async (req, res, next) => {
-  const courseId = req.params.id;
+  const courseId = req.params.courseId;
   const userId = req.user.id;
-  const enrollment = Enrollment.findOne({ courseId, userId });
+  const enrollment = await Enrollment.findOne({ courseId, userId });
   if (!enrollment)
     return next(
       new AppError(
@@ -97,6 +97,7 @@ export const getCompleteCourse = catchAsync(async (req, res, next) => {
       )
     );
 
-  const course = Course.findById(courseId).populate("contents");
+  const course = await Course.findById(courseId).populate("contents");
+  if (!course) return next(new AppError("Course Not Found", 404));
   res.status(200).json(course);
 });
