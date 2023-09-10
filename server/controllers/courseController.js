@@ -49,10 +49,13 @@ export const deleteCourse = catchAsync(async (req, res, next) => {
   if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
     return next(new AppError("Invalid Or Forbidden Course ", 404));
   }
-  const course = await Course.findByIdAndDelete(req.params.id);
+  const course = await Course.findById(req.params.id);
   if (!course) {
     return next(new AppError("Course Not Found", 404));
+  } else if (course.offeredBy !== req.user.id || req.user.role !== "admin") {
+    return next(new AppError("Not Authorized to Delete", 401));
   }
+  await course.deleteOne();
   res.status(200).json(course);
 });
 export const updateCourse = catchAsync(async (req, res, next) => {
