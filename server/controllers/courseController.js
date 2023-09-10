@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 import catchAsync from "../utils/catchAsync.js";
 import AppError from "../utils/appError.js";
 import Course from "../models/Course.js";
+import Contents from "../models/Content.js";
 import Enrollment from "../models/Enrollment.js";
 const filteredObj = (body, ...allowedFields) => {
   const resultObj = {};
