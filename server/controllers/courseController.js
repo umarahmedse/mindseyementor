@@ -69,7 +69,7 @@ export const updateCourse = catchAsync(async (req, res, next) => {
 
   // Check if the course exists
   if (!course) {
-    return res.status(404).json({ message: "Course not found" });
+    return next(new AppError("Course Not Found", 404));
   }
 
   // Check if the user ID in the 'offeredBy' field matches 'req.user.id'
@@ -77,15 +77,12 @@ export const updateCourse = catchAsync(async (req, res, next) => {
     course.offeredBy.toString() !== req.user.id ||
     !req.user.role === "admin"
   ) {
-    return res
-      .status(403)
-      .json({ message: "You do not have permission to update this course" });
+    return next(
+      new AppError("You do not have permission to update this course", 403)
+    );
   }
-
-  if (!course) {
-    return next(new AppError("Course Not Found", 404));
-  }
-  res.status(200).json(course);
+  const updatedCourse = await Course.findByIdAndUpdate(id, req.body);
+  res.status(200).json(updatedCourse);
 });
 
 export const getCompleteCourse = catchAsync(async (req, res, next) => {
