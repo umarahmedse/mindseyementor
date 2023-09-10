@@ -38,5 +38,5 @@ EnrollmentSchema.pre("save", async function (next) {
 
   next();
 });
-const Enrollment = mongoose.model("Enrollment", EnrollmentSchema);
+const Enrollment = mongoose.model("Enrollments", EnrollmentSchema);
 export default Enrollment;
