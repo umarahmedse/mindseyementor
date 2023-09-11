@@ -14,6 +14,7 @@ import userRoutes from "./routes/userRoutes.js";
 import courseRoutes from "./routes/courseRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
 import enrollmentRoutes from "./routes/enrollmentRoutes.js";
+import contentRoutes from "./routes/contentRoutes.js";
 import globalErrorHandler from "./utils/errorHandler.js";
 const limiter = rateLimit({
   max: 100, // Maximum requests per windowMs
@@ -40,6 +41,7 @@ app.use("/auth", authRoutes);
 app.use("/enrollment", enrollmentRoutes);
 app.use("/users", userRoutes);
 app.use("/course", courseRoutes);
+app.use("/content", contentRoutes);
 app.all("*", (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
 });
